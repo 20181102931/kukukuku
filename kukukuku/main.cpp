@@ -1,15 +1,32 @@
-//
-//  main.cpp
-//  kukukuku
-//
-//  Created by s20181102931 on 2019/9/6.
-//  Copyright © 2019 s20181102931. All rights reserved.
-//
-
-#include <iostream>
-
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+#include<stdio.h>
+#include<stdlib.h>
+struct table
+{
+    int data;
+    struct table* next;
+};
+int main()
+{
+    int n=0,i=0;
+    struct table *L;
+    struct table *t;
+    L=(struct table*)malloc(sizeof(struct table));
+    L->next=NULL;
+    t=(struct table*)malloc(sizeof(struct table));
+    scanf("%d",&t->data);
+    while(t->data!=-1)
+    {
+        if((t->data%2)!=0)
+        {
+            n++;
+        }
+        scanf("%d",&t->data);
+    };
+   t=L->next;
+   while(t!=NULL)
+    {
+        t=t->next;
+        printf("%d",t->data);
+    };
     return 0;
 }
