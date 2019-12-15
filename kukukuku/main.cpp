@@ -1,42 +1,57 @@
-#include <stdio.h>
-#define N 1000
-int arr[N];
-/* 对长度为n的数组arr执行插入排序 */
-void insertionSort(int arr[], int n);
-/* 打印长度为n的数组arr */
-void printArray(int arr[], int n);
-int main() {
-    int n, i;
-    scanf("%d", &n);
-    for (i = 0; i < n; ++i) {
-        scanf("%d", &arr[i]);
-    }
-    insertionSort(arr, n);
-    printArray(arr, n);
-    return 0;
-}
-/* 打印长度为n的数组arr */
-void printArray(int arr[], int n) {
-    int i;
-    for (i = 0; i < n; i++) {
-        printf("%d", arr[i]);
-        if (i < n - 1)  /* 下标0..n-2每个元素后面有个空格 */
-            printf(" ");/*下标n-1,也就是最后一个元素后面没有空格*/
-    }
-    printf("\n");/* 一行打印完后换行 */
-}
-void insertionSort(int arr[], int n)
+void setup()
 {
-    int i,t;
-    for(i=0;i<n;i++) //1 2 3
+    // put your setup code here, to run once:
+    // Serial.begin(9600);
+    Serial.begin(9600);
+    pinMode(13,OUTPUT);
+}
+//double x=0;
+void loop()
+{
+    // 1 1  1 1  1 1  0 1  1 1 0 1  1 0  0 0
+    // put your main code here, to run repeatedly:
+    //短用1，长用0；HELLO
+    int mos[26][4]={{1,0,2,2},{0,1,1,1},{1,0,1,0},{0,1,1,2},{1,2,2,2},{1,1,0,1},{0,0,1,2},{1,1,1,1},{1,1,2,2},{1,0,0,0},{0,1,0,2},{1,0,1,1},{0,0,2,2},{0,1,2,2},{0,0,0,2},{1,0,0,1},
+        {0,0,1,0},{1,0,1,2},{1,1,1,2},{0,2,2,2},{1,1,0,2},{1,1,1,0},{1,0,0,2},{0,1,1,0},{0,1,0,0},{0,0,1,1}};
+    //int mos1[10][5]={{1,0,0,0,0},{1,1,0,0,0},{1,1,1,0,0},{1,1,1,1,0},{1,1,1,1,1},{0,1,1,1,1},{0,0,1,1,1},{0,0,0,1,1},{0,0,0,0,1},{0,0,0,0,0}};
+    int k,h;
+    char m;
+    String str = "";
+    while(Serial.available()>0)//判断串口缓冲区有没有数据，>0串口接收到了数据
     {
-        for(int j=i+1;j<n;j--)
+        str =  str + char(Serial.read());
+    }
+    k=str.length();
+    for(int j=0;j<k;j++)
+    {
+        m=str[j];
+        if(int(m)>80)//小写
         {
-            t=arr[j];
-            if(arr[i]<arr[j])
-                //取代，插入；
-                
+            h = (int)(m) - 97;
+        }else
+        {
+            h = (int)(m) - 65;
+        }
+        for(int t=0;t<4;t++)
+        {
+            if(mos[h][t]==1)
+            {
+                Serial.println("1");
+                digitalWrite(13,HIGH);
+                delay(400);
+                digitalWrite(13,LOW);
+                delay(400);
+            }
+            else if(mos[h][t]==0)
+            {
+                Serial.println("0");
+                digitalWrite(13,HIGH);
+                delay(1500);
+                digitalWrite(13,LOW);
+                delay(1500);
+            }
+            else
+                break;
         }
     }
 }
-    
